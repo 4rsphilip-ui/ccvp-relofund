@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCVP — Leadership Giving Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1e3d0f;
+    --forest-mid: #2d5a18;
+    --gold: #c9971a;
+    --cream: #faf7f0;
+    --parchment: #f2ead8;
+    --ink: #1a1a14;
+    --muted: #6b6652;
+    --border: #d8cfb4;
+    --error: #8b2020;
+    --progress-bg: #e8f0e3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0d2006 0%, var(--forest) 60%, #1a3509 100%);
+  }
+  .login-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 3px; padding: 48px 40px; width: 380px;
+    text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .login-card .cross { font-size: 30px; color: var(--gold); margin-bottom: 8px; letter-spacing: 6px; }
+  .login-card h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--forest); margin-bottom: 4px; }
+  .login-card .sub { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 30px; }
+  .login-card input {
+    width: 100%; padding: 12px 14px; margin-bottom: 12px;
+    border: 1px solid var(--border); border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: 15px; color: var(--ink);
+  }
+  .login-card input:focus { outline: 2px solid var(--forest-mid); border-color: transparent; }
+  .btn-login {
+    width: 100%; padding: 13px; background: var(--forest); color: white;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .btn-login:hover { background: var(--forest-mid); }
+  .login-err { color: var(--error); font-size: 13px; margin-top: 10px; display: none; }
+
+  /* ── APP ── */
+  #app { display: none; }
+
+  header {
+    background: var(--forest); padding: 16px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+  }
+  .hdr-left h1 { font-family: 'Cormorant Garamond', serif; color: white; font-size: 20px; font-weight: 600; }
+  .hdr-left span { color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .btn-logout {
+    background: rgba(255,255,255,0.1); color: white;
+    border: 1px solid rgba(255,255,255,0.2); padding: 7px 16px;
+    border-radius: 2px; cursor: pointer; font-size: 11px;
+    font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+  .main { max-width: 1140px; margin: 0 auto; padding: 28px 20px 48px; }
+
+  /* ── GOAL BANNER ── */
+  .goal-banner {
+    background: white; border: 1px solid var(--border); border-radius: 3px;
+    padding: 22px 26px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .goal-banner .goal-input-group { display: flex; align-items: center; gap: 10px; }
+  .goal-banner label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
+  .goal-banner .amt-wrap { position: relative; }
+  .goal-banner .currency { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; }
+  .goal-banner input {
+    padding: 9px 12px 9px 26px; border: 1px solid var(--border); border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: 15px; width: 160px; color: var(--ink);
+  }
+  .goal-banner input:focus { outline: 2px solid var(--forest-mid); border-color: transparent; }
+  .btn-set-goal {
+    padding: 9px 18px; background: var(--forest); color: white;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s;
+  }
+  .btn-set-goal:hover { background: var(--forest-mid); }
+  .goal-banner .goal-stats {
+    display: flex; gap: 28px; flex-wrap: wrap; flex: 1; justify-content: flex-end;
+  }
+  .goal-stat { text-align: right; }
+  .goal-stat .gs-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .goal-stat .gs-val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink); }
+  .goal-stat .gs-val.balance { color: var(--forest); }
+  .goal-stat .gs-val.pct { color: var(--gold); }
+
+  /* Progress bar */
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-bar-bg {
+    height: 12px; background: var(--progress-bg);
+    border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 6px;
+    background: linear-gradient(90deg, var(--forest-mid), var(--forest));
+    transition: width 0.6s ease;
+    min-width: 0%;
+  }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+  /* ── SUMMARY CARDS ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: white; border: 1px solid var(--border); border-radius: 3px;
+    padding: 18px 20px; border-top: 3px solid var(--forest);
+  }
+  .card.pledges { border-top-color: var(--gold); }
+  .card.onetime { border-top-color: #4a8e38; }
+  .card label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 6px; }
+  .card .val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; }
+  .card .sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* ── ADD ENTRY ── */
+  .add-section {
+    background: white; border: 1px solid var(--border); border-radius: 3px;
+    padding: 20px 24px; margin-bottom: 24px;
+  }
+  .add-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--forest); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .add-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
+  .fg label { display: block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 5px; }
+  .fg input, .fg select {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--border); border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: 14px; color: var(--ink); background: white;
+  }
+  .fg input:focus, .fg select:focus { outline: 2px solid var(--forest-mid); border-color: transparent; }
+  .btn-add {
+    padding: 9px 18px; background: var(--forest-mid); color: white;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 600;
+    white-space: nowrap; transition: background 0.2s;
+  }
+  .btn-add:hover { background: var(--forest); }
+
+  /* ── TABLE ── */
+  .table-section { background: white; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+  .table-hdr { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .table-hdr h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--forest); }
+  .rec-count { font-size: 11px; color: var(--muted); background: var(--parchment); padding: 3px 10px; border-radius: 20px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--parchment); }
+  th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); border-bottom: 1px solid var(--border); }
+  td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #f0ece3; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #fdfbf5; }
+
+  .type-pill {
+    display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  }
+  .type-pill.onetime { background: #dff0d8; color: #2d6a1a; }
+  .type-pill.pledge12 { background: #fef3d0; color: #8a6000; }
+  .type-pill.pledge24 { background: #e8d8f5; color: #5a2a8a; }
+
+  .source-tag { font-size: 11px; color: var(--muted); background: var(--parchment); padding: 2px 7px; border-radius: 3px; }
+  .amt-cell { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 16px; }
+  .total-cell { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; color: var(--forest); }
+
+  .del-btn { background: none; border: none; cursor: pointer; color: #ccc; font-size: 16px; padding: 2px 6px; border-radius: 2px; transition: all 0.15s; }
+  .del-btn:hover { color: var(--error); background: #fdf0f0; }
+
+  .empty { text-align: center; padding: 48px 24px; color: var(--muted); }
+  .empty .icon { font-size: 32px; opacity: 0.3; margin-bottom: 10px; }
+
+  .toast {
+    position: fixed; bottom: 20px; right: 20px;
+    background: var(--forest); color: white; padding: 11px 20px;
+    border-radius: 3px; font-size: 13px; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transform: translateY(60px); opacity: 0; transition: all 0.3s ease; z-index: 999;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 700px) {
+    .add-grid { grid-template-columns: 1fr 1fr; }
+    .add-grid .btn-add { grid-column: span 2; }
+    .goal-banner { flex-direction: column; align-items: flex-start; }
+    .goal-banner .goal-stats { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="cross">✦ ✝ ✦</div>
+    <h1>CCVP Leadership Dashboard</h1>
+    <p class="sub">Authorized Access Only</p>
+    <input type="password" id="pwd" placeholder="Enter password" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn-login" onclick="login()">Sign In</button>
+    <div class="login-err" id="login-err">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="hdr-left">
+      <h1>CCVP Church Relocation Fund — Dashboard</h1>
+      <span>Leadership View</span>
+    </div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </header>
+
+  <div class="main">
+
+    <!-- Goal Setting -->
+    <div class="goal-banner">
+      <div class="goal-input-group">
+        <label>Fundraising Goal</label>
+        <div class="amt-wrap">
+          <span class="currency">$</span>
+          <input type="number" id="goal-input" placeholder="e.g. 150000" min="0">
+        </div>
+        <button class="btn-set-goal" onclick="setGoal()">Set Goal</button>
+      </div>
+      <div class="goal-stats">
+        <div class="goal-stat">
+          <div class="gs-label">Total Raised</div>
+          <div class="gs-val" id="stat-raised">$0</div>
+        </div>
+        <div class="goal-stat">
+          <div class="gs-label">Balance Needed</div>
+          <div class="gs-val balance" id="stat-balance">—</div>
+        </div>
+        <div class="goal-stat">
+          <div class="gs-label">% of Goal</div>
+          <div class="gs-val pct" id="stat-pct">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-labels">
+        <span>$0</span>
+        <span id="goal-label">Set a goal to track progress</span>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="cards">
+      <div class="card">
+        <label>Total Contributions</label>
+        <div class="val" id="card-total">$0</div>
+        <div class="sub" id="card-count">0 records</div>
+      </div>
+      <div class="card onetime">
+        <label>One-Time Gifts</label>
+        <div class="val" id="card-onetime">$0</div>
+        <div class="sub" id="card-onetime-count">0 gifts</div>
+      </div>
+      <div class="card pledges">
+        <label>12-Month Pledges</label>
+        <div class="val" id="card-12mo">$0</div>
+        <div class="sub" id="card-12mo-count">0 pledges</div>
+      </div>
+      <div class="card pledges">
+        <label>24-Month Pledges</label>
+        <div class="val" id="card-24mo">$0</div>
+        <div class="sub" id="card-24mo-count">0 pledges</div>
+      </div>
+    </div>
+
+    <!-- Manual Entry -->
+    <div class="add-section">
+      <h2>Record a Contribution Manually</h2>
+      <div class="add-grid">
+        <div class="fg">
+          <label>Contributor Name</label>
+          <input type="text" id="f-name" placeholder="Full name or Anonymous">
+        </div>
+        <div class="fg">
+          <label>Amount ($)</label>
+          <input type="number" id="f-amount" placeholder="0" min="1" step="1">
+        </div>
+        <div class="fg">
+          <label>Giving Type</label>
+          <select id="f-type">
+            <option value="One-Time Gift">One-Time Gift</option>
+            <option value="12-Month Pledge">12-Month Pledge</option>
+            <option value="24-Month Pledge">24-Month Pledge</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Date</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="fg">
+          <label>&nbsp;</label>
+          <button class="btn-add" onclick="addEntry()">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contributions Table -->
+    <div class="table-section">
+      <div class="table-hdr">
+        <h2>All Contributions &amp; Pledges</h2>
+        <span class="rec-count" id="rec-count">0 records</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Contributor</th>
+            <th>Type</th>
+            <th>Monthly / Gift Amt</th>
+            <th>Total Value</th>
+            <th>Date</th>
+            <th>Source</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="7">
+            <div class="empty">
+              <div class="icon">🕊</div>
+              <p>No contributions yet. Add one above or share the pledge form link.</p>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PASSWORD   = 'church2026';
+  const DATA_KEY   = 'ccvp_pledges';
+  const GOAL_KEY   = 'ccvp_goal';
+
+  // ── AUTH ──
+  function login() {
+    if (document.getElementById('pwd').value === PASSWORD) {
+      sessionStorage.setItem('auth','1');
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      init();
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+      document.getElementById('pwd').value = '';
+    }
+  }
+  function logout() {
+    sessionStorage.removeItem('auth');
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pwd').value = '';
+    document.getElementById('login-err').style.display = 'none';
+  }
+  if (sessionStorage.getItem('auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+
+  // ── DATA ──
+  function load() { try { return JSON.parse(localStorage.getItem(DATA_KEY) || '[]'); } catch { return []; } }
+  function save(d) { localStorage.setItem(DATA_KEY, JSON.stringify(d)); }
+  function loadGoal() { return parseFloat(localStorage.getItem(GOAL_KEY)) || 0; }
+
+  const fmt = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0 });
+  const fmtDate = d => { if (!d) return '—'; const [y,m,day] = d.split('-'); return `${m}/${day}/${y}`; };
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function typePill(type) {
+    if (type === 'One-Time Gift')    return `<span class="type-pill onetime">One-Time</span>`;
+    if (type === '12-Month Pledge')  return `<span class="type-pill pledge12">12-Month</span>`;
+    if (type === '24-Month Pledge')  return `<span class="type-pill pledge24">24-Month</span>`;
+    return type;
+  }
+
+  // ── GOAL ──
+  function setGoal() {
+    const v = parseFloat(document.getElementById('goal-input').value);
+    if (!v || v <= 0) return alert('Please enter a valid goal amount.');
+    localStorage.setItem(GOAL_KEY, v);
+    render();
+    toast('Goal saved ✓');
+  }
+
+  // ── ADD MANUAL ──
+  function addEntry() {
+    const name   = document.getElementById('f-name').value.trim();
+    const amount = parseFloat(document.getElementById('f-amount').value);
+    const type   = document.getElementById('f-type').value;
+    const date   = document.getElementById('f-date').value;
+
+    if (!name) return alert('Please enter a contributor name.');
+    if (!amount || amount < 1) return alert('Please enter a valid amount.');
+
+    const months = type === '12-Month Pledge' ? 12 : type === '24-Month Pledge' ? 24 : 1;
+    const totalValue = amount * months;
+
+    const data = load();
+    data.unshift({ id: Date.now(), date, name, type, amount, totalValue, source: 'Manual', connection: '' });
+    save(data);
+    render();
+
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-amount').value = '';
+    toast('Contribution recorded ✓');
+  }
+
+  // ── DELETE ──
+  function del(i) {
+    if (!confirm('Remove this entry?')) return;
+    const data = load(); data.splice(i, 1); save(data); render(); toast('Entry removed');
+  }
+
+  // ── RENDER ──
+  function render() {
+    const data = load();
+    const goal = loadGoal();
+
+    // Update goal input display
+    if (goal > 0) document.getElementById('goal-input').value = goal;
+
+    // Totals
+    const total    = data.reduce((s,r) => s + Number(r.totalValue || r.amount), 0);
+    const oneTime  = data.filter(r => r.type === 'One-Time Gift');
+    const p12      = data.filter(r => r.type === '12-Month Pledge');
+    const p24      = data.filter(r => r.type === '24-Month Pledge');
+
+    // Goal stats
+    document.getElementById('stat-raised').textContent = fmt(total);
+    if (goal > 0) {
+      const balance = Math.max(0, goal - total);
+      const pct = Math.min(100, (total / goal * 100)).toFixed(1);
+      document.getElementById('stat-balance').textContent = fmt(balance);
+      document.getElementById('stat-pct').textContent = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('goal-label').textContent = fmt(goal) + ' goal';
+    } else {
+      document.getElementById('stat-balance').textContent = '—';
+      document.getElementById('stat-pct').textContent = '—';
+      document.getElementById('progress-fill').style.width = '0%';
+      document.getElementById('goal-label').textContent = 'Set a goal to track progress';
+    }
+
+    // Cards
+    document.getElementById('card-total').textContent = fmt(total);
+    document.getElementById('card-count').textContent = `${data.length} record${data.length!==1?'s':''}`;
+
+    const otTotal = oneTime.reduce((s,r) => s + Number(r.amount), 0);
+    document.getElementById('card-onetime').textContent = fmt(otTotal);
+    document.getElementById('card-onetime-count').textContent = `${oneTime.length} gift${oneTime.length!==1?'s':''}`;
+
+    const p12Total = p12.reduce((s,r) => s + Number(r.totalValue||r.amount*12), 0);
+    document.getElementById('card-12mo').textContent = fmt(p12Total);
+    document.getElementById('card-12mo-count').textContent = `${p12.length} pledge${p12.length!==1?'s':''}`;
+
+    const p24Total = p24.reduce((s,r) => s + Number(r.totalValue||r.amount*24), 0);
+    document.getElementById('card-24mo').textContent = fmt(p24Total);
+    document.getElementById('card-24mo-count').textContent = `${p24.length} pledge${p24.length!==1?'s':''}`;
+
+    document.getElementById('rec-count').textContent = `${data.length} record${data.length!==1?'s':''}`;
+
+    // Table
+    const tbody = document.getElementById('tbody');
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="icon">🕊</div><p>No contributions yet.</p></div></td></tr>`;
+    } else {
+      tbody.innerHTML = data.map((r, i) => {
+        const months = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
+        const tv = r.totalValue || (r.amount * months);
+        const amtLabel = r.type === 'One-Time Gift' ? fmt(r.amount) : `${fmt(r.amount)}/mo`;
+        const src = r.source === 'Manual' ? `<span class="source-tag">Manual</span>` : `<span class="source-tag" style="background:#dff0d8;color:#2d6a1a">Online</span>`;
+        return `<tr>
+          <td><strong>${esc(r.name)}</strong>${r.connection ? `<br><span style="font-size:11px;color:var(--muted)">${esc(r.connection)}</span>` : ''}</td>
+          <td>${typePill(r.type)}</td>
+          <td class="amt-cell">${amtLabel}</td>
+          <td class="total-cell">${fmt(tv)}</td>
+          <td>${fmtDate(r.date)}</td>
+          <td>${src}</td>
+          <td><button class="del-btn" onclick="del(${i})">✕</button></td>
+        </tr>`;
+      }).join('');
+    }
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function init() {
+    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+    render();
+    // Poll for new online pledges every 10 seconds
+    setInterval(render, 10000);
+  }
+
+  if (sessionStorage.getItem('auth') === '1') init();
+</script>
+</body>
+</html>
