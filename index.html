@@ -196,6 +196,32 @@
     .goal-banner { flex-direction: column; align-items: flex-start; }
     .goal-banner .goal-stats { justify-content: flex-start; }
   }
+  /* Styling for the navigation links in the header */
+.hdr-nav {
+    display: flex;
+    gap: 20px;
+    margin: 0 20px;
+}
+
+.nav-link {
+    color: white; /* This makes the font white */
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--gold); /* Changes to gold when you hover over it */
+}
+
+.nav-link.active {
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 2px;
+}
+  
 </style>
 </head>
 <body>
