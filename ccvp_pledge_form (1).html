@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCVP Church Relocation — Make a Pledge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1e3d0f;
+    --forest-mid: #2d5a18;
+    --gold: #c9971a;
+    --gold-light: #f0d078;
+    --cream: #faf7f0;
+    --parchment: #f2ead8;
+    --ink: #1a1a14;
+    --muted: #6b6652;
+    --border: #d8cfb4;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--forest);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 80px
+    );
+  }
+  .cross-ornament {
+    font-size: 28px; color: var(--gold); margin-bottom: 10px;
+    display: block; position: relative; z-index: 1;
+    letter-spacing: 6px;
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 700;
+    color: white; line-height: 1.15;
+    position: relative; z-index: 1;
+    margin-bottom: 6px;
+  }
+  .page-header .tagline {
+    font-size: 12px; color: rgba(255,255,255,0.55);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    position: relative; z-index: 1;
+  }
+  .gold-rule {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 14px auto 0;
+    position: relative; z-index: 1;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-style: italic;
+    color: var(--muted); line-height: 1.6;
+    max-width: 560px; margin: 0 auto;
+  }
+
+  /* ── FORM CARD ── */
+  .form-wrap {
+    flex: 1;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 36px 16px 48px;
+  }
+  .form-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    width: 100%; max-width: 520px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+  .form-card-header {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 28px;
+  }
+  .form-card-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: var(--forest);
+  }
+  .form-card-header p {
+    font-size: 13px; color: var(--muted); margin-top: 3px;
+  }
+  .form-body { padding: 28px; }
+
+  .field { margin-bottom: 20px; }
+  .field label {
+    display: block;
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 7px;
+  }
+  .field input, .field select {
+    width: 100%; padding: 11px 14px;
+    border: 1px solid var(--border); border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: 15px;
+    color: var(--ink); background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--forest-mid);
+    box-shadow: 0 0 0 3px rgba(45,90,24,0.1);
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6652' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  /* Pledge type cards */
+  .pledge-options {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pledge-opt {
+    border: 2px solid var(--border); border-radius: 3px;
+    padding: 14px 10px; text-align: center; cursor: pointer;
+    transition: all 0.2s; background: white;
+  }
+  .pledge-opt:hover { border-color: var(--forest-mid); background: #f6fbf3; }
+  .pledge-opt.selected {
+    border-color: var(--forest);
+    background: #f0f8eb;
+    box-shadow: 0 0 0 1px var(--forest);
+  }
+  .pledge-opt .p-icon { font-size: 20px; margin-bottom: 6px; display: block; }
+  .pledge-opt .p-label {
+    font-size: 12px; font-weight: 600; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 0.05em; display: block;
+    margin-bottom: 2px;
+  }
+  .pledge-opt .p-sub { font-size: 11px; color: var(--muted); }
+
+  /* Amount field with $ prefix */
+  .amount-wrap { position: relative; }
+  .amount-wrap .currency {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 15px; color: var(--muted); pointer-events: none;
+  }
+  .amount-wrap input { padding-left: 28px; }
+
+  .monthly-note {
+    font-size: 12px; color: var(--forest-mid);
+    margin-top: 6px; font-style: italic; display: none;
+  }
+
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 4px 0 20px;
+  }
+
+  .submit-btn {
+    width: 100%; padding: 14px;
+    background: var(--forest); color: white;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .submit-btn:hover { background: var(--forest-mid); }
+  .submit-btn:active { transform: scale(0.99); }
+
+  .privacy-note {
+    text-align: center; font-size: 12px; color: var(--muted);
+    margin-top: 14px; line-height: 1.5;
+  }
+
+  /* ── SUCCESS ── */
+  #success-screen {
+    display: none; text-align: center; padding: 48px 28px;
+  }
+  #success-screen .check { font-size: 48px; margin-bottom: 14px; }
+  #success-screen h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; color: var(--forest); margin-bottom: 10px;
+  }
+  #success-screen p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  #success-screen .pledge-summary {
+    background: var(--parchment); border: 1px solid var(--border);
+    border-radius: 3px; padding: 16px 20px; margin: 20px 0;
+    text-align: left; font-size: 14px; line-height: 2;
+  }
+  #success-screen .pledge-summary strong { color: var(--forest); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 16px 24px; text-align: center;
+    border-top: 2px solid var(--gold);
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; }
+  footer span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; color: rgba(255,255,255,0.65);
+  }
+
+  @media (max-width: 480px) {
+    .pledge-options { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="cross-ornament">✦ ✝ ✦</span>
+  <h1>CCVP Church Relocation Fund</h1>
+  <p class="tagline">Commitment of Faith &amp; Generosity</p>
+  <div class="gold-rule"></div>
+</div>
+
+<div class="intro">
+  <p>"Every good gift and every perfect gift is from above." — James 1:17<br>
+  Thank you for prayerfully considering a gift to our new church home.</p>
+</div>
+
+<div class="form-wrap">
+  <div class="form-card">
+    <div class="form-card-header">
+      <h2>Your Pledge / Contribution</h2>
+      <p>All fields marked * are required. Your information is kept confidential.</p>
+    </div>
+
+    <div class="form-body" id="form-body">
+
+      <!-- Name -->
+      <div class="field">
+        <label>Full Name *</label>
+        <input type="text" id="c-name" placeholder="Your full name">
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label>Email Address *</label>
+        <input type="email" id="c-email" placeholder="your@email.com">
+      </div>
+
+      <!-- Phone (optional) -->
+      <div class="field">
+        <label>Phone Number <span style="font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="tel" id="c-phone" placeholder="(000) 000-0000">
+      </div>
+
+      <hr class="divider">
+
+      <!-- Giving Type -->
+      <div class="field">
+        <label>Select Your Giving Type *</label>
+        <div class="pledge-options">
+          <div class="pledge-opt" id="opt-onetime" onclick="selectType('One-Time Gift')">
+            <span class="p-icon">🙏</span>
+            <span class="p-label">One-Time</span>
+            <span class="p-sub">Single gift</span>
+          </div>
+          <div class="pledge-opt" id="opt-12mo" onclick="selectType('12-Month Pledge')">
+            <span class="p-icon">📅</span>
+            <span class="p-label">12-Month</span>
+            <span class="p-sub">Monthly pledge</span>
+          </div>
+          <div class="pledge-opt" id="opt-24mo" onclick="selectType('24-Month Pledge')">
+            <span class="p-icon">🌱</span>
+            <span class="p-label">24-Month</span>
+            <span class="p-sub">Monthly pledge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="field">
+        <label>Amount * <span id="amount-label" style="font-weight:300;text-transform:none;letter-spacing:0"></span></label>
+        <div class="amount-wrap">
+          <span class="currency">$</span>
+          <input type="number" id="c-amount" placeholder="0.00" min="1" step="1">
+        </div>
+        <p class="monthly-note" id="monthly-note"></p>
+      </div>
+
+      <!-- Connection -->
+      <div class="field">
+        <label>Your Connection to CCVP <span style="font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <select id="c-connection">
+          <option value="">— Please select —</option>
+          <option value="Current Member">Current Member</option>
+          <option value="Former Member">Former Member</option>
+          <option value="Former Clergy">Former Clergy</option>
+          <option value="Partner Church / Org">Partner Church / Organization</option>
+          <option value="Friend of the Ministry">Friend of the Ministry</option>
+        </select>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" onclick="submitPledge()">Submit My Pledge →</button>
+      <p class="privacy-note">Your pledge is a statement of intent.<br>The church will follow up with giving instructions.</p>
+    </div>
+
+    <!-- Success -->
+    <div id="success-screen">
+      <div class="check">✝</div>
+      <h2>Thank You &amp; God Bless You!</h2>
+      <p>Your pledge has been received. We are deeply grateful for your generosity and your partnership in this next chapter of our journey.</p>
+      <div class="pledge-summary" id="pledge-summary"></div>
+      <p>We will be in touch with giving instructions. Please keep us in your prayers as we step boldly into this new season.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><span>CCVP Church Relocation</span> &nbsp;·&nbsp; All pledges are held in confidence</p>
+</footer>
+
+<script>
+  const STORAGE_KEY = 'ccvp_pledges';
+  let selectedType = null;
+
+  function selectType(type) {
+    selectedType = type;
+    document.querySelectorAll('.pledge-opt').forEach(el => el.classList.remove('selected'));
+    const map = { 'One-Time Gift': 'opt-onetime', '12-Month Pledge': 'opt-12mo', '24-Month Pledge': 'opt-24mo' };
+    document.getElementById(map[type]).classList.add('selected');
+
+    const note = document.getElementById('monthly-note');
+    const lbl = document.getElementById('amount-label');
+    if (type === 'One-Time Gift') {
+      note.style.display = 'none';
+      lbl.textContent = '(one-time total)';
+    } else {
+      const months = type === '12-Month Pledge' ? 12 : 24;
+      note.style.display = 'block';
+      note.textContent = `Your monthly gift over ${months} months.`;
+      lbl.textContent = '(monthly amount)';
+    }
+  }
+
+  function submitPledge() {
+    const name   = document.getElementById('c-name').value.trim();
+    const email  = document.getElementById('c-email').value.trim();
+    const phone  = document.getElementById('c-phone').value.trim();
+    const amount = parseFloat(document.getElementById('c-amount').value);
+    const conn   = document.getElementById('c-connection').value;
+
+    if (!name)         return alert('Please enter your full name.');
+    if (!email || !email.includes('@')) return alert('Please enter a valid email address.');
+    if (!selectedType) return alert('Please select a giving type.');
+    if (!amount || amount < 1) return alert('Please enter a valid amount.');
+
+    const months = selectedType === '12-Month Pledge' ? 12 : selectedType === '24-Month Pledge' ? 24 : 1;
+    const totalValue = amount * months;
+
+    const pledge = {
+      id: Date.now(),
+      date: new Date().toISOString().split('T')[0],
+      name, email, phone, type: selectedType,
+      amount, totalValue, connection: conn,
+      status: 'Pledged'
+    };
+
+    // Save to localStorage (accessible by admin tracker)
+    const pledges = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    pledges.unshift(pledge);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(pledges));
+
+    // Show success
+    document.getElementById('form-body').style.display = 'none';
+    const sc = document.getElementById('success-screen');
+    sc.style.display = 'block';
+
+    const fmt = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0 });
+    const typeLabel = selectedType === 'One-Time Gift'
+      ? `One-Time Gift of ${fmt(amount)}`
+      : `${selectedType} — ${fmt(amount)}/month (${fmt(totalValue)} total)`;
+
+    document.getElementById('pledge-summary').innerHTML = `
+      <strong>Name:</strong> ${esc(name)}<br>
+      <strong>Fund:</strong> CCVP Church Relocation Fund<br>
+      <strong>Gift:</strong> ${typeLabel}<br>
+      <strong>Date:</strong> ${pledge.date}
+    `;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+</script>
+</body>
+</html>
