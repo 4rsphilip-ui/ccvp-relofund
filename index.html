@@ -435,7 +435,6 @@
   function load() {
     return cloudData; // Now 'render' will use the cloud data
 }
-  function save(d) { localStorage.setItem(DATA_KEY, JSON.stringify(d)); }
   function loadGoal() { return parseFloat(localStorage.getItem(GOAL_KEY)) || 0; }
 
   const fmt = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0 });
