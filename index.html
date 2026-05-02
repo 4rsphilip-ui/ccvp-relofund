@@ -492,9 +492,22 @@
   }
 
   // ── DELETE ──
-  function del(i) {
-    if (!confirm('Remove this entry?')) return;
-    const data = load(); data.splice(i, 1); save(data); render(); toast('Entry removed');
+  window.del = async function(docId) {
+    if (!confirm('Are you sure you want to permanently remove this entry from the church records?')) return;
+
+    try {
+        // Point to the specific record in the "pledges" collection
+        const docRef = doc(db, "pledges", docId);
+        
+        // Execute the delete in the cloud
+        await deleteDoc(docRef);
+        
+        toast('Entry removed from cloud ✓');
+    } catch (e) {
+        console.error("Error deleting from Firebase: ", e);
+        alert("Error removing entry: " + e.message);
+    }
+  
   }
 
   // ── RENDER ──
