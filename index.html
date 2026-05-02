@@ -381,7 +381,25 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+  // 1. Import Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, collection, query, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  // 2. Paste your Config here
+  const firebaseConfig = {
+    apiKey: "AIzaSyC0G9xTUHH1oax15mm_wfozZa7Dc9NVB9g",
+  authDomain: "ccvp-relocation-fund.firebaseapp.com",
+  projectId: "ccvp-relocation-fund",
+  storageBucket: "ccvp-relocation-fund.firebasestorage.app",
+  messagingSenderId: "46691568355",
+  appId: "1:46691568355:web:5dcdfb05b18d4ca77ed3d6"
+  };
+
+  // 3. Initialize
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
   const PASSWORD   = 'church2026';
   const DATA_KEY   = 'ccvp_pledges';
   const GOAL_KEY   = 'ccvp_goal';
