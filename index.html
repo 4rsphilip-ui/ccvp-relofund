@@ -429,7 +429,7 @@
   }
 
   // ── DATA ──
-  function load() { try { return JSON.parse(localStorage.getItem(DATA_KEY) || '[]'); } catch { return []; } }
+ 
   let cloudData = []; // Create a variable to hold the pledges from the cloud
   function load() {
     return cloudData; // Now 'render' will use the cloud data
