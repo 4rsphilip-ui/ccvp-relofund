@@ -567,7 +567,16 @@
     document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
     render();
     // Poll for new online pledges every 10 seconds
-    setInterval(render, 10000);
+    // This tells the dashboard: "Every time the database changes, update my screen"
+const q = query(collection(db, "pledges"), orderBy("timestamp", "desc"));
+
+onSnapshot(q, (snapshot) => {
+    cloudData = [];
+    snapshot.forEach((doc) => {
+        cloudData.push({ id: doc.id, ...doc.data() });
+    });
+    render(); // This triggers your existing table/progress bar math
+});
   }
 
   if (sessionStorage.getItem('auth') === '1') init();
