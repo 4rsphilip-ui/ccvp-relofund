@@ -575,7 +575,8 @@
           <td class="total-cell">${fmt(tv)}</td>
           <td>${fmtDate(r.date)}</td>
           <td>${src}</td>
-          <td><button class="del-btn" onclick="del(${i})">✕</button></td>
+          
+          <td><button class="del-btn" onclick="del('${r.id}')">✕</button></td>
         </tr>`;
       }).join('');
     }
