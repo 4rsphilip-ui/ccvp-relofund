@@ -458,7 +458,7 @@
   }
 
   // ── ADD MANUAL ──
-  function addEntry() {
+  async function addEntry() {
     const name   = document.getElementById('f-name').value.trim();
     const amount = parseFloat(document.getElementById('f-amount').value);
     const type   = document.getElementById('f-type').value;
@@ -470,14 +470,24 @@
     const months = type === '12-Month Pledge' ? 12 : type === '24-Month Pledge' ? 24 : 1;
     const totalValue = amount * months;
 
-    const data = load();
-    data.unshift({ id: Date.now(), date, name, type, amount, totalValue, source: 'Manual', connection: '' });
-    save(data);
-    render();
+    try {
+        // Send to Firebase instead of localStorage
+        await addDoc(collection(db, "pledges"), {
+            name,
+            amount,
+            type,
+            date,
+            totalValue,
+            source: 'Manual',
+            timestamp: serverTimestamp() // Import this from firestore at the top
+        });
 
-    document.getElementById('f-name').value = '';
-    document.getElementById('f-amount').value = '';
-    toast('Contribution recorded ✓');
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-amount').value = '';
+        toast('Contribution recorded ✓');
+    } catch (e) {
+        alert("Error saving: " + e.message);
+    }
   }
 
   // ── DELETE ──
