@@ -451,9 +451,20 @@
   };
 
   // ── RENDER ──
+  async function loadGoal() {
+    try {
+      const snap = await getDoc(doc(db, 'settings', 'goal'));
+      if (snap.exists()) {
+        window._cachedGoal = snap.data().amount || 0;
+        document.getElementById('goal-input').value = window._cachedGoal;
+        render();
+      }
+    } catch(err) { console.log('Goal not set yet'); }
+  }
+
   function render() {
     const data = allDocs;
-    const goal = parseFloat(localStorage.getItem(GOAL_KEY)) || 0;
+    const goal = window._cachedGoal || 0;
 
     if (goal > 0) document.getElementById('goal-input').value = goal;
 
