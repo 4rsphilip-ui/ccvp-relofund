@@ -339,37 +339,47 @@
     }
   };
 
-  window.exportToExcel = function() {
+  
+window.exportToExcel = async function() {
     if (!allDocs.length) return alert('No contributions to export.');
+    if (!window.XLSX) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    const XLSX = window.XLSX;
     const headers = ['Contributor','Type','Monthly/Gift Amount','Total Value','Date','Source','Email','Phone','Connection'];
-    const rows = [headers.join(',')];
-    allDocs.forEach(r => {
+    const dataRows = allDocs.map(r => {
       const months = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
-      const tv = Number(r.totalValue) || (Number(r.amount) * months);
-      const amtLabel = r.type === 'One-Time Gift' ? r.amount : r.amount + '/mo';
-      rows.push([
-        '"' + (r.name||'') + '"',
-        '"' + (r.type||'') + '"',
-        amtLabel,
-        tv,
-        r.date || '',
-        r.source || 'Manual',
-        r.email || '',
-        r.phone || '',
-        '"' + (r.connection||'') + '"'
-      ].join(','));
+      const tv     = Number(r.totalValue) || (Number(r.amount) * months);
+      const amtLabel = r.type === 'One-Time Gift' ? '$' + Number(r.amount).toFixed(2) : '$' + Number(r.amount).toFixed(2) + '/mo';
+      const tvLabel  = '$' + Number(tv).toFixed(2);
+      return [r.name||'', r.type||'', amtLabel, tvLabel, r.date||'', r.source||'Manual', r.email||'', '\'' + (r.phone||''), r.connection||''];
     });
-    const csv  = rows.join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'CCVP_Contributors_' + localDate() + '.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Exported successfully ✓');
+    const wsData = [headers, ...dataRows];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let c = range.s.c; c <= range.e.c; c++) {
+      const cellAddr = XLSX.utils.encode_cell({ r: 0, c });
+      if (ws[cellAddr]) ws[cellAddr].s = { font: { bold: true } };
+    }
+    for (let r = 1; r <= dataRows.length; r++) {
+      ['C','D'].forEach(col => {
+        const cellAddr = col + (r + 1);
+        if (ws[cellAddr]) ws[cellAddr].s = { alignment: { horizontal: 'right' } };
+      });
+    }
+    ws['!cols'] = [{wch:25},{wch:16},{wch:18},{wch:14},{wch:12},{wch:10},{wch:28},{wch:16},{wch:24}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Contributors');
+    const today = new Date();
+    const dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+    XLSX.writeFile(wb, 'CCVP_Contributors_' + dateStr + '.xlsx');
+    showToast('Exported successfully \u2713');
   };
-
   async function loadGoal() {
     try {
       const snap = await getDoc(doc(db, 'settings', 'goal'));
