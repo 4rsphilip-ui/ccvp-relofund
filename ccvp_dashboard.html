@@ -15,6 +15,8 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+  /* LOGIN */
   #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #0d2006 0%, var(--forest) 60%, #1a3509 100%); }
   .login-card { background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 48px 40px; width: 380px; text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
   .login-card .cross { font-size: 30px; color: var(--gold); margin-bottom: 8px; letter-spacing: 6px; }
@@ -25,13 +27,18 @@
   .btn-login { width: 100%; padding: 13px; background: var(--forest); color: white; border: none; border-radius: 2px; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; }
   .btn-login:hover { background: var(--forest-mid); }
   .login-err { color: var(--error); font-size: 13px; margin-top: 10px; display: none; }
+
+  /* APP */
   #app { display: none; }
   header { background: var(--forest); padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--gold); }
   .hdr-left h1 { font-family: 'Cormorant Garamond', serif; color: white; font-size: 20px; font-weight: 600; }
   .hdr-left span { color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
   .btn-logout { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 7px 16px; border-radius: 2px; cursor: pointer; font-size: 11px; font-family: 'Jost', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; }
   .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
   .main { max-width: 1140px; margin: 0 auto; padding: 28px 20px 48px; }
+
+  /* GOAL BANNER */
   .goal-banner { background: white; border: 1px solid var(--border); border-radius: 3px; padding: 22px 26px; margin-bottom: 24px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
   .goal-input-group { display: flex; align-items: center; gap: 10px; }
   .goal-input-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
@@ -47,10 +54,14 @@
   .goal-stat .gs-val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; }
   .goal-stat .gs-val.balance { color: var(--forest); }
   .goal-stat .gs-val.pct { color: var(--gold); }
+
+  /* PROGRESS BAR */
   .progress-wrap { margin-bottom: 24px; }
   .progress-bar-bg { height: 12px; background: var(--progress-bg); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
   .progress-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--forest-mid), var(--forest)); transition: width 0.6s ease; }
   .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+  /* CARDS */
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; margin-bottom: 24px; }
   .card { background: white; border: 1px solid var(--border); border-radius: 3px; padding: 18px 20px; border-top: 3px solid var(--forest); }
   .card.pledges { border-top-color: var(--gold); }
@@ -58,6 +69,8 @@
   .card label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 6px; }
   .card .val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; }
   .card .sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* ADD ENTRY */
   .add-section { background: white; border: 1px solid var(--border); border-radius: 3px; padding: 20px 24px; margin-bottom: 24px; }
   .add-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--forest); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
   .add-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
@@ -66,8 +79,8 @@
   .fg input:focus, .fg select:focus { outline: 2px solid var(--forest-mid); border-color: transparent; }
   .btn-add { padding: 9px 18px; background: var(--forest-mid); color: white; border: none; border-radius: 2px; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 600; white-space: nowrap; transition: background 0.2s; }
   .btn-add:hover { background: var(--forest); }
-  .btn-export { padding: 9px 18px; background: #4a8e38; color: white; border: none; border-radius: 2px; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; }
-  .btn-export:hover { background: #3a7028; }
+
+  /* TABLE */
   .table-section { background: white; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
   .table-hdr { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .table-hdr h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--forest); }
@@ -78,8 +91,9 @@
   td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #f0ece3; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tbody tr:hover td { background: #fdfbf5; }
+
   .type-pill { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .type-pill.onetime { background: #dff0d8; color: #2d6a1a; }
+  .type-pill.onetime  { background: #dff0d8; color: #2d6a1a; }
   .type-pill.pledge12 { background: #fef3d0; color: #8a6000; }
   .type-pill.pledge24 { background: #e8d8f5; color: #5a2a8a; }
   .source-tag { font-size: 11px; color: var(--muted); background: var(--parchment); padding: 2px 7px; border-radius: 3px; }
@@ -88,15 +102,28 @@
   .total-cell { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 16px; color: var(--forest); }
   .del-btn { background: none; border: none; cursor: pointer; color: #ccc; font-size: 16px; padding: 2px 6px; border-radius: 2px; transition: all 0.15s; }
   .del-btn:hover { color: var(--error); background: #fdf0f0; }
+
   .empty { text-align: center; padding: 48px 24px; color: var(--muted); }
   .empty .icon { font-size: 32px; opacity: 0.3; margin-bottom: 10px; }
+
+  .loading { text-align: center; padding: 32px; color: var(--muted); font-style: italic; }
+
+  .btn-export { padding: 9px 18px; background: #4a8e38; color: white; border: none; border-radius: 2px; cursor: pointer; font-family: "Jost", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.2s; }
+  .btn-export:hover { background: #3a7028; }
   .toast { position: fixed; bottom: 20px; right: 20px; background: var(--forest); color: white; padding: 11px 20px; border-radius: 3px; font-size: 13px; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transform: translateY(60px); opacity: 0; transition: all 0.3s ease; z-index: 999; }
   .toast.show { transform: translateY(0); opacity: 1; }
-  @media (max-width: 700px) { .add-grid { grid-template-columns: 1fr 1fr; } .add-grid .btn-add { grid-column: span 2; } .goal-banner { flex-direction: column; align-items: flex-start; } .goal-stats { justify-content: flex-start; } }
+
+  @media (max-width: 700px) {
+    .add-grid { grid-template-columns: 1fr 1fr; }
+    .add-grid .btn-add { grid-column: span 2; }
+    .goal-banner { flex-direction: column; align-items: flex-start; }
+    .goal-stats { justify-content: flex-start; }
+  }
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="cross">✦ ✝ ✦</div>
@@ -108,6 +135,7 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <header>
     <div class="hdr-left">
@@ -116,7 +144,9 @@
     </div>
     <button class="btn-logout" onclick="logout()">Sign Out</button>
   </header>
+
   <div class="main">
+
     <div class="goal-banner">
       <div class="goal-input-group">
         <label>Fundraising Goal</label>
@@ -141,6 +171,7 @@
         </div>
       </div>
     </div>
+
     <div class="progress-wrap">
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
@@ -150,6 +181,7 @@
         <span id="goal-label">Set a goal to track progress</span>
       </div>
     </div>
+
     <div class="cards">
       <div class="card">
         <label>Total Contributions</label>
@@ -172,6 +204,7 @@
         <div class="sub" id="card-24mo-count">0 pledges</div>
       </div>
     </div>
+
     <div class="add-section">
       <h2>Record a Contribution Manually</h2>
       <div class="add-grid">
@@ -201,6 +234,7 @@
         </div>
       </div>
     </div>
+
     <div class="table-section">
       <div class="table-hdr">
         <h2>All Contributions &amp; Pledges</h2>
@@ -222,17 +256,18 @@
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="7"><div class="empty"><div class="icon">🕊</div><p>Loading contributions…</p></div></td></tr>
+          <tr><td colspan="7"><div class="loading">Loading contributions…</div></td></tr>
         </tbody>
       </table>
     </div>
+
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, setDoc, getDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -246,36 +281,21 @@
   };
 
   const PASSWORD = 'church2026';
+  // Goal stored in Firebase
+
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
+
   let allDocs = [];
   let unsubscribe = null;
 
-  const fmt     = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0 });
-  const fmtDate = d => { if (!d) return '—'; const [y,m,day] = d.split('-'); return `${m}/${day}/${y}`; };
-  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function localDate() {
-    const d = new Date();
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  }
-  function typePill(type) {
-    if (type === 'One-Time Gift')   return `<span class="type-pill onetime">One-Time</span>`;
-    if (type === '12-Month Pledge') return `<span class="type-pill pledge12">12-Month</span>`;
-    if (type === '24-Month Pledge') return `<span class="type-pill pledge24">24-Month</span>`;
-    return type;
-  }
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
-
+  // ── AUTH ──
   window.login = function() {
     if (document.getElementById('pwd').value === PASSWORD) {
       sessionStorage.setItem('auth','1');
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
-      startListening();
+      init();
     } else {
       document.getElementById('login-err').style.display = 'block';
       document.getElementById('pwd').value = '';
@@ -284,64 +304,95 @@
 
   window.logout = function() {
     sessionStorage.removeItem('auth');
-    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
-    allDocs = [];
+    if (unsubscribe) unsubscribe();
     document.getElementById('app').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pwd').value = '';
     document.getElementById('login-err').style.display = 'none';
   };
 
+  if (sessionStorage.getItem('auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+
+  // ── HELPERS ──
+  const fmt = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0 });
+  const fmtDate = d => { if (!d) return '—'; const [y,m,day] = d.split('-'); return `${m}/${day}/${y}`; };
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function typePill(type) {
+    if (type === 'One-Time Gift')   return `<span class="type-pill onetime">One-Time</span>`;
+    if (type === '12-Month Pledge') return `<span class="type-pill pledge12">12-Month</span>`;
+    if (type === '24-Month Pledge') return `<span class="type-pill pledge24">24-Month</span>`;
+    return type;
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── GOAL ──
   window.setGoal = async function() {
     const v = parseFloat(document.getElementById('goal-input').value);
     if (!v || v <= 0) return alert('Please enter a valid goal amount.');
     try {
       await setDoc(doc(db, 'settings', 'goal'), { amount: v });
-      window._cachedGoal = v;
-      render();
       showToast('Goal saved ✓');
     } catch(err) {
       alert('Error saving goal: ' + err.message);
     }
   };
 
+  // ── ADD MANUAL ENTRY ──
   window.addEntry = async function() {
     const name   = document.getElementById('f-name').value.trim();
     const amount = parseFloat(document.getElementById('f-amount').value);
     const type   = document.getElementById('f-type').value;
     const date   = document.getElementById('f-date').value;
+
     if (!name)             return alert('Please enter a contributor name.');
     if (!amount || amount < 1) return alert('Please enter a valid amount.');
+
     const months     = type === '12-Month Pledge' ? 12 : type === '24-Month Pledge' ? 24 : 1;
     const totalValue = amount * months;
+
     try {
       await addDoc(collection(db, 'pledges'), {
         name, type, amount, totalValue,
-        date: date || localDate(),
-        source: 'Manual', connection: '', email: '', phone: '',
+        date: date || new Date().toISOString().split('T')[0],
+        source: 'Manual',
+        connection: '',
+        email: '', phone: '',
         createdAt: serverTimestamp()
       });
       document.getElementById('f-name').value   = '';
       document.getElementById('f-amount').value = '';
       showToast('Contribution recorded ✓');
     } catch (err) {
-      alert('Error saving: ' + err.message);
+      console.error(err);
+      alert('Error saving. Please try again.');
     }
   };
 
+  // ── DELETE ──
   window.delEntry = async function(id) {
     if (!confirm('Remove this entry?')) return;
     try {
       await deleteDoc(doc(db, 'pledges', id));
       showToast('Entry removed');
     } catch (err) {
-      alert('Error deleting: ' + err.message);
+      console.error(err);
+      alert('Error deleting. Please try again.');
     }
   };
 
-  
-window.exportToExcel = async function() {
+  // ── EXPORT TO EXCEL (SheetJS) ──
+  window.exportToExcel = async function() {
     if (!allDocs.length) return alert('No contributions to export.');
+
+    // Dynamically load SheetJS
     if (!window.XLSX) {
       await new Promise((resolve, reject) => {
         const s = document.createElement('script');
@@ -350,52 +401,59 @@ window.exportToExcel = async function() {
         document.head.appendChild(s);
       });
     }
+
     const XLSX = window.XLSX;
     const headers = ['Contributor','Type','Monthly/Gift Amount','Total Value','Date','Source','Email','Phone','Connection'];
+
     const dataRows = allDocs.map(r => {
-      const months = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
-      const tv     = Number(r.totalValue) || (Number(r.amount) * months);
-      const amtLabel = r.type === 'One-Time Gift' ? '$' + Number(r.amount).toFixed(2) : '$' + Number(r.amount).toFixed(2) + '/mo';
+      const months   = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
+      const tv       = Number(r.totalValue) || (Number(r.amount) * months);
+      const amtLabel = r.type === 'One-Time Gift'
+        ? '$' + Number(r.amount).toFixed(2)
+        : '$' + Number(r.amount).toFixed(2) + '/mo';
       const tvLabel  = '$' + Number(tv).toFixed(2);
-      return [r.name||'', r.type||'', amtLabel, tvLabel, r.date||'', r.source||'Manual', r.email||'', '\'' + (r.phone||''), r.connection||''];
+      return [r.name||'', r.type||'', amtLabel, tvLabel, r.date||'', r.source||'Manual', r.email||'', (r.phone||''), r.connection||''];
     });
-    const wsData = [headers, ...dataRows];
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let c = range.s.c; c <= range.e.c; c++) {
-      const cellAddr = XLSX.utils.encode_cell({ r: 0, c });
-      if (ws[cellAddr]) ws[cellAddr].s = { font: { bold: true } };
-    }
-    for (let r = 1; r <= dataRows.length; r++) {
-      ['C','D'].forEach(col => {
-        const cellAddr = col + (r + 1);
-        if (ws[cellAddr]) ws[cellAddr].s = { alignment: { horizontal: 'right' } };
-      });
-    }
+
+    // Build HTML table — bold headers, right-align amount columns
+    let html = '<table>';
+    html += '<tr>' + headers.map(h => `<th><b>${h}</b></th>`).join('') + '</tr>';
+    dataRows.forEach(row => {
+      html += '<tr>' + row.map((cell, i) => {
+        const align = (i === 2 || i === 3) ? ' style="text-align:right"' : '';
+        return `<td${align}>${cell}</td>`;
+      }).join('') + '</tr>';
+    });
+    html += '</table>';
+
+    // Parse into worksheet via hidden div
+    const div = document.createElement('div');
+    div.style.display = 'none';
+    div.innerHTML = html;
+    document.body.appendChild(div);
+    const ws = XLSX.utils.table_to_sheet(div.querySelector('table'));
+    document.body.removeChild(div);
+
+    // Column widths
     ws['!cols'] = [{wch:25},{wch:16},{wch:18},{wch:14},{wch:12},{wch:10},{wch:28},{wch:16},{wch:24}];
+
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Contributors');
-    const today = new Date();
+
+    const today   = new Date();
     const dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
     XLSX.writeFile(wb, 'CCVP_Contributors_' + dateStr + '.xlsx');
     showToast('Exported successfully \u2713');
   };
-  async function loadGoal() {
-    try {
-      const snap = await getDoc(doc(db, 'settings', 'goal'));
-      if (snap.exists()) {
-        window._cachedGoal = snap.data().amount || 0;
-        document.getElementById('goal-input').value = window._cachedGoal;
-        render();
-      }
-    } catch(err) { console.log('Goal not set yet'); }
-  }
 
+  // ── RENDER ──
   function render() {
     const data = allDocs;
-    const goal = window._cachedGoal || 0;
+    const goal = parseFloat(localStorage.getItem(GOAL_KEY)) || 0;
 
-    const total   = data.reduce((s,r) => s + Number(r.totalValue || r.amount), 0);
+    if (goal > 0) document.getElementById('goal-input').value = goal;
+
+    const total  = data.reduce((s,r) => s + Number(r.totalValue || r.amount), 0);
     const onetime = data.filter(r => r.type === 'One-Time Gift');
     const p12     = data.filter(r => r.type === '12-Month Pledge');
     const p24     = data.filter(r => r.type === '24-Month Pledge');
@@ -404,15 +462,15 @@ window.exportToExcel = async function() {
     if (goal > 0) {
       const balance = Math.max(0, goal - total);
       const pct = Math.min(100, (total / goal * 100)).toFixed(1);
-      document.getElementById('stat-balance').textContent      = fmt(balance);
-      document.getElementById('stat-pct').textContent          = pct + '%';
-      document.getElementById('progress-fill').style.width     = pct + '%';
-      document.getElementById('goal-label').textContent        = fmt(goal) + ' goal';
+      document.getElementById('stat-balance').textContent = fmt(balance);
+      document.getElementById('stat-pct').textContent     = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('goal-label').textContent   = fmt(goal) + ' goal';
     } else {
-      document.getElementById('stat-balance').textContent  = '—';
-      document.getElementById('stat-pct').textContent      = '—';
+      document.getElementById('stat-balance').textContent = '—';
+      document.getElementById('stat-pct').textContent     = '—';
       document.getElementById('progress-fill').style.width = '0%';
-      document.getElementById('goal-label').textContent    = 'Set a goal to track progress';
+      document.getElementById('goal-label').textContent   = 'Set a goal to track progress';
     }
 
     document.getElementById('card-total').textContent         = fmt(total);
@@ -430,11 +488,11 @@ window.exportToExcel = async function() {
       tbody.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="icon">🕊</div><p>No contributions yet.</p></div></td></tr>`;
     } else {
       tbody.innerHTML = data.map(r => {
-        const months   = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
-        const tv       = Number(r.totalValue) || (Number(r.amount) * months);
-        const amtLabel = r.type === 'One-Time Gift' ? fmt(r.amount) : `${fmt(r.amount)}/mo`;
-        const srcClass = r.source === 'Online' ? 'source-tag source-online' : 'source-tag';
-        const connLine = r.connection ? `<br><span style="font-size:11px;color:var(--muted)">${esc(r.connection)}</span>` : '';
+        const months    = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
+        const tv        = r.totalValue || (r.amount * months);
+        const amtLabel  = r.type === 'One-Time Gift' ? fmt(r.amount) : `${fmt(r.amount)}/mo`;
+        const srcClass  = r.source === 'Online' ? 'source-tag source-online' : 'source-tag';
+        const connLine  = r.connection ? `<br><span style="font-size:11px;color:var(--muted)">${esc(r.connection)}</span>` : '';
         return `<tr>
           <td><strong>${esc(r.name)}</strong>${connLine}</td>
           <td>${typePill(r.type)}</td>
@@ -448,25 +506,23 @@ window.exportToExcel = async function() {
     }
   }
 
-  function startListening() {
+  // ── INIT with real-time listener ──
+  function init() {
     document.getElementById('f-date').value = localDate();
     loadGoal();
-    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+
     const q = query(collection(db, 'pledges'), orderBy('createdAt', 'desc'));
     unsubscribe = onSnapshot(q, (snapshot) => {
       allDocs = snapshot.docs.map(d => ({ _id: d.id, ...d.data() }));
       render();
     }, (err) => {
+      console.error('Firestore error:', err);
       document.getElementById('tbody').innerHTML =
-        `<tr><td colspan="7"><div class="empty"><p style="color:#8b2020">Error: ${err.message}</p></div></td></tr>`;
+        `<tr><td colspan="7"><div class="empty"><p style="color:#8b2020">Error loading data. Check Firestore rules.</p></div></td></tr>`;
     });
   }
 
-  if (sessionStorage.getItem('auth') === '1') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    startListening();
-  }
+  if (sessionStorage.getItem('auth') === '1') init();
 </script>
 </body>
 </html>
