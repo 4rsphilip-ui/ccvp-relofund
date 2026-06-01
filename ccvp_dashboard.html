@@ -345,12 +345,14 @@
     allDocs.forEach(r => {
       const months = r.type === '12-Month Pledge' ? 12 : r.type === '24-Month Pledge' ? 24 : 1;
       const tv = Number(r.totalValue) || (Number(r.amount) * months);
-      const amtLabel = r.type === 'One-Time Gift' ? r.amount : r.amount + '/mo';
+      
+      const amtLabel = r.type === 'One-Time Gift' ? '"$' + Number(r.amount).toFixed(2) + '"' : '"$' + Number(r.amount).toFixed(2) + '/mo"';
+const tvLabel  = '"$' + Number(tv).toFixed(2) + '"';
       rows.push([
         '"' + (r.name||'') + '"',
         '"' + (r.type||'') + '"',
         amtLabel,
-        tv,
+        tvLabel,
         r.date || '',
         r.source || 'Manual',
         r.email || '',
